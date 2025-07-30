@@ -1,29 +1,22 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import { nowPlayActions } from '@/core/actions/movies/now-playing-actios';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+import React from 'react';
+import "../global.css";
+const queryClient = new QueryClient();
+const RootLayout = () => {
+  nowPlayActions()
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  <QueryClientProvider client={queryClient}>
+
+     <Stack
+      screenOptions={{
+        headerShown : false
+      }}
+     />
+  </QueryClientProvider>
+  )
 }
+
+export default RootLayout
