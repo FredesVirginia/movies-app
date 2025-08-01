@@ -6,6 +6,8 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
+
+
   const { queryNowMoviesPlaying , queryPopularMoviesPlaying , queryTopRatedMoviesPlaying , queryUpCommingMoviesPlaying } = useMovies();
   //ESTE HOOK ES PARA QUE QUE REACT NATIVE SEPA CUANTO PADDIN O MARGIN SE TIENE QUE DAR EN CADA DISPOSITOVO
 
@@ -33,7 +35,10 @@ const HomeScreen = () => {
     
 
        {/**MOVIES HORIZONTAL */}
-       <MoviesHorizontal title="Top Rated" movies={queryTopRatedMoviesPlaying.data ?? []}/>
+       <MoviesHorizontal title="Top Rated" movies={queryTopRatedMoviesPlaying.data?.pages.flat() ?? []} 
+       loadNextPage={queryTopRatedMoviesPlaying.fetchNextPage}
+       
+       />
 
          {/**MOVIES HORIZONTAL */}
        <MoviesHorizontal title="Up Comming" movies={queryUpCommingMoviesPlaying.data ?? []}/>
